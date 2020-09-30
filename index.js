@@ -9,7 +9,19 @@ const server = http.createServer((request, res) => {
     const id = url.parse(request.url, true).query.id;
     const pathName = url.parse(request.url).pathname;
 
-    if (pathName === '/laptop' && id < laptopData.length) {
+    // PRODUCT OVERVIEW
+    if (pathName === '/products' || pathName === '/') {
+        res.writeHead(200, {
+            'Content-type': 'text/html'
+        });
+
+        fs.readFile(`${__dirname}/templates/overview.html`, 'utf-8',
+            (err, data) => {
+                let overviewOutput = data;
+            })
+
+        // LAPTOP DETAIL
+    } else if (pathName === '/laptop' && id < laptopData.length) {
         res.writeHead(200, {
             'Content-type': 'text/html'
         });
