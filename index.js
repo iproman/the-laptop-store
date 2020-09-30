@@ -1,10 +1,32 @@
 const fs = require('fs');
 const http = require('http');
+const url = require('url');
 
 const json = fs.readFileSync(`${__dirname}/data/data.json`, 'UTF-8');
 const laptopData = JSON.parse(json);
 
 const server = http.createServer((request, res) => {
+    const id = url.parse(request.url, true).query.id;
+    const pathName = url.parse(request.url).pathname;
+
+    if (pathName === '/laptop' && id < laptopData.length) {
+        res.writeHead(200, {
+            'Content-type': 'text/html'
+        });
+        fs.readFile(`${__dirname}/templates/laptop.html`, 'utf-8',
+            (err, data) => {
+                let laptop = laptopData[id];
+                const output = replaceTemplate(data, laptop)
+                res.end(output);
+            })
+
+
+    } else {
+        res.writeHead(404, {
+            'Content-type': 'text/html'
+        })
+        res.end('404 Not found url')
+    }
 })
 
 server.listen(8080, '127.0.0.1', () => {
