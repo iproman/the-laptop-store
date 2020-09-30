@@ -21,8 +21,8 @@ const server = http.createServer((request, res) => {
                 fs.readFile(`${__dirname}/templates/card.html`,
                     'utf-8',
                     (err, data) => {
-                        const cardsOutput = laptopData.map(el => replaceTemplate(data, el));
-                        overviewOutput = overviewOutput.replace('{%CARDS%}', cardsOutput)
+                        const cardsOutput = laptopData.map(el => replaceTemplate(data, el)).join('');
+                        overviewOutput = overviewOutput.replace('{%CARDS%}', cardsOutput);
                         res.end(overviewOutput);
                     }
                 );
