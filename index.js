@@ -41,7 +41,7 @@ const server = http.createServer((request, res) => {
             })
 
         // IMAGES
-    } else if (/\.(jpg|jpeg|png|gif)$/i) {
+    } else if (/\.(jpg|jpeg|png|gif|webp)$/i) {
         fs.readFile(`${__dirname}/data/img${pathName}`, (err, data) => {
             res.writeHead(200, {
                 'Content-type': 'image/jpg'
